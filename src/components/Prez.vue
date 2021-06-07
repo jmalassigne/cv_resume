@@ -1,6 +1,6 @@
 <template>
   <div>
-   <h1>Composant prez</h1>
+   <h1></h1>
   </div>
 </template>
 
