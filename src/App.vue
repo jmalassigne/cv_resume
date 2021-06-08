@@ -12,7 +12,7 @@
         <p>{{ progress }} %</p>
       </div>
     </div>
-    <div v-else class="main-page">
+    <div v-else class="main-page" ref="mainPage">
       <aside class="left-aside">
         <header class="header">
           <div class="header__img">
@@ -95,25 +95,54 @@
           <a href="#"><i class="fab fa-github-square"></i></a>
         </footer>
       </aside>
-      <Prez />
-      <aside class="right-aside"></aside>
+      <main class="container" :class="{ open: openedNav }">
+        <Prez v-if="activeComponent === 'prez'" />
+        <Skills v-if="activeComponent === 'skills'" />
+        <Templates v-if="activeComponent === 'templates'" />
+        <Contact v-if="activeComponent === 'contact'" />
+      </main>
+      <aside class="right-aside" :class="{ open: openedNav }">
+        <div class="top">
+          <div class="top__container" @click.prevent="openedNav = !openedNav">
+            <div class="top__container-item"></div>
+            <div class="top__container-item"></div>
+            <div class="top__container-item"></div>
+          </div>
+        </div>
+        <nav class="nav">
+          <ul>
+            <li class="nav__item" @click.prevent="nav('prez')">Présentation</li>
+            <li class="nav__item" @click.prevent="nav('skills')">Compétences</li>
+            <li class="nav__item" @click.prevent="nav('templates')">Templates</li>
+            <li class="nav__item" @click.prevent="nav('contact')">Contact</li>
+          </ul>
+        </nav>
+      </aside>
     </div>
   </div>
 </template>
 
 <script>
 import Prez from "./components/Prez.vue";
+import Skills from "./components/Skills.vue";
+import Templates from "./components/Templates.vue";
+import Contact from "./components/Contact.vue";
 
 export default {
   name: "App",
   components: {
     Prez,
+    Skills,
+    Templates,
+    Contact
   },
   data() {
     return {
       isLoading: true,
       startProgress: false,
       progress: 0,
+      openedNav: false,
+      activeComponent: 'prez'
     };
   },
   mounted() {
@@ -131,6 +160,12 @@ export default {
       this.isLoading = !this.isLoading;
     }, 3000);
   },
+  methods: {
+    nav(target) {
+      this.activeComponent = target;
+      this.openedNav = false;
+    }
+  }
 };
 </script>
 
@@ -277,9 +312,10 @@ a {
 .main-page {
   display: flex;
   max-width: 1500px;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 60px);
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
 }
 
 /********** Asides **********/
@@ -287,13 +323,14 @@ a {
 aside {
   width: 280px;
   background-color: $background_3;
+  flex: none;
 }
 
 /********** Left Aside **********/
 
 .left-aside {
   height: 100%;
-  overflow-y: scroll; ///////////////////////////////////////// A verifier
+  overflow-y: scroll;
 }
 
 .header {
@@ -349,6 +386,7 @@ aside {
   margin-top: 230px;
   margin-bottom: 50px;
   padding: 20px 30px;
+  width: 100%;
 
   hr {
     margin: 20px 0;
@@ -463,12 +501,14 @@ aside {
       }
       .bar {
         width: 100%;
-        height: 3px;
+        height: 4px;
         border-radius: 1px;
         margin: 7px 0 10px 0;
+        background-color: $background_4;
 
         &-item {
           height: 100%;
+          border-radius: 1px;
           background-color: $yellow;
 
           &.first {
@@ -507,10 +547,10 @@ aside {
 
     a {
       cursor: pointer;
-      transition: color .3s;
+      transition: color 0.3s;
 
       &:hover {
-        color: $white_heading
+        color: $white_heading;
       }
     }
 
@@ -533,11 +573,149 @@ aside {
   i {
     font-size: 1.3rem;
     margin: 0 15px;
-    transition: color .3s;
+    transition: color 0.3s;
 
     &:hover {
-      color: $white_heading;;
+      color: $white_heading;
+    }
+  }
+}
+
+/********** Main **********/
+
+.container {
+  background-color: $background_1;
+  transition: all .4s;
+  margin-right: 80px; 
+
+  &.open {
+    position: relative;
+    transform: translateX(-120px);
+    opacity: .3;
+    z-index: -10000;
+
+  }
+}
+
+/********** Right Aside **********/
+
+.right-aside {
+  background-color: $background_3;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  transform: translateX(120px);
+  transition: transform 0.3s;
+
+  .top {
+    height: 80px;
+    background-color: $background_2;
+    position: relative;
+
+    &__container {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 15px;
+      width: 30px;
+      top: 50%;
+      left: 30px;
+      cursor: pointer;
+
+      &-item {
+        width: 20px;
+        height: 3px;
+        border-radius: 2px;
+        background-color: $yellow;
+        opacity: 0.5;
+        transition: all 0.3s;
+      }
+      &:hover .top__container-item {
+        opacity: 1;
+      }
+    }
+  }
+
+  .nav {
+    padding: 20px 0 0 20px;
+
+    &__item {
+      margin: 10px 0;
+      cursor: pointer;
+      font-size: 1.02rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: transform 0.6s, opacity 0.6s, color 0.3s;
+
+      &:nth-child(1) {
+        transform: translateX(400px);
+      }
+
+      &:nth-child(2) {
+        transform: translateX(300px);
+      }
+
+      &:nth-child(3) {
+        transform: translateX(200px);
+      }
+
+      &:nth-child(4) {
+        transform: translateX(100px);
+      }
+    }
+  }
+
+  &.open {
+    transform: translateX(0);
+
+    .top__container {
+      &-item:nth-child(1) {
+        transform: rotate(45deg) translateY(3px) translateX(5px);
+        height: 4px;
+        opacity: 1;
+
+
+      }
+      &-item:nth-child(2) {
+        opacity: 0;
+      }
+      &-item:nth-child(3) {
+        transform: rotate(-45deg) translateY(-3px) translateX(5px);
+        height: 4px;
+        opacity: 1;
+
+      }
+    }
+
+    .nav__item {
+      opacity: 1;
+      transform: translateX(0);
+
+      &:hover {
+        color: $white_heading;
+      }
     }
   }
 }
 </style>
+
+<aside class="right-aside">
+  <div class="top">
+    <div class="top__container">
+      <div class="top__container-item"></div>
+      <div class="top__container-item"></div>
+      <div class="top__container-item"></div>
+    </div>
+  </div>
+  <nav class="nav">
+    <ul>
+      <li class="nav__item">Présentation</li>
+      <li class="nav__item">Compétences</li>
+      <li class="nav__item">Templates</li>
+      <li class="nav__item">Contact</li>
+    </ul>
+  </nav>
+</aside>
