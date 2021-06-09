@@ -96,6 +96,7 @@
         </footer>
       </aside>
       <main class="container" :class="{ open: openedNav }">
+        <Home v-if="activeComponent === 'home'" @openNav="openedNav = true"/>
         <Prez v-if="activeComponent === 'prez'" />
         <Skills v-if="activeComponent === 'skills'" />
         <Templates v-if="activeComponent === 'templates'" />
@@ -123,6 +124,7 @@
 </template>
 
 <script>
+import Home from "./components/Home.vue";
 import Prez from "./components/Prez.vue";
 import Skills from "./components/Skills.vue";
 import Templates from "./components/Templates.vue";
@@ -131,10 +133,11 @@ import Contact from "./components/Contact.vue";
 export default {
   name: "App",
   components: {
+    Home,
     Prez,
     Skills,
     Templates,
-    Contact
+    Contact,
   },
   data() {
     return {
@@ -142,7 +145,7 @@ export default {
       startProgress: false,
       progress: 0,
       openedNav: false,
-      activeComponent: 'prez'
+      activeComponent: "home",
     };
   },
   mounted() {
@@ -164,8 +167,8 @@ export default {
     nav(target) {
       this.activeComponent = target;
       this.openedNav = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -330,7 +333,8 @@ aside {
 
 .left-aside {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
+  z-index: 3;
 }
 
 .header {
@@ -387,6 +391,8 @@ aside {
   margin-bottom: 50px;
   padding: 20px 30px;
   width: 100%;
+  background: $background_1;
+  opacity: 1;
 
   hr {
     margin: 20px 0;
@@ -584,16 +590,26 @@ aside {
 /********** Main **********/
 
 .container {
-  background-color: $background_1;
-  transition: all .4s;
-  margin-right: 80px; 
+  overflow: auto;
+  background: center / contain
+      linear-gradient(
+        to top,
+        #191923,
+        rgb(28, 28, 38),
+        rgba(30, 30, 41, 0.9),
+        rgba(33, 33, 44, 0.9),
+        rgba(36, 36, 47, 0.9)
+      ),
+    top / cover no-repeat url("./assets/mountain.jpg");
+
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s;
+  margin-right: 80px;
 
   &.open {
-    position: relative;
     transform: translateX(-120px);
-    opacity: .3;
-    z-index: -10000;
-
+    opacity: 0.3;
   }
 }
 
@@ -602,12 +618,12 @@ aside {
 .right-aside {
   background-color: $background_3;
   position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  top: 20px;
+  bottom: 20px;
+  right: 20px;
   width: 200px;
-  transform: translateX(120px);
-  transition: transform 0.3s;
+  width: 80px;
+  transition: width 0.3s;
 
   .top {
     height: 80px;
@@ -640,15 +656,28 @@ aside {
   }
 
   .nav {
-    padding: 20px 0 0 20px;
+    padding: 40px 0 0 20px;
 
     &__item {
-      margin: 10px 0;
+      margin: 20px 0;
       cursor: pointer;
       font-size: 1.02rem;
       font-weight: 500;
       opacity: 0;
-      transition: transform 0.6s, opacity 0.6s, color 0.3s;
+      transition: transform 0.6s, opacity 0.6s, color 0.1s;
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -20px;
+        height: 25px;
+        width: 4px;
+        border-radius: 2px;
+        background: $yellow;
+        opacity: 0;
+        transition: opacity .1s;
+      }
 
       &:nth-child(1) {
         transform: translateX(400px);
@@ -669,15 +698,13 @@ aside {
   }
 
   &.open {
-    transform: translateX(0);
+    width: 200px;
 
     .top__container {
       &-item:nth-child(1) {
         transform: rotate(45deg) translateY(3px) translateX(5px);
         height: 4px;
         opacity: 1;
-
-
       }
       &-item:nth-child(2) {
         opacity: 0;
@@ -686,7 +713,6 @@ aside {
         transform: rotate(-45deg) translateY(-3px) translateX(5px);
         height: 4px;
         opacity: 1;
-
       }
     }
 
@@ -696,26 +722,12 @@ aside {
 
       &:hover {
         color: $white_heading;
+
+        &:before {
+          opacity: 1;
+        }
       }
     }
   }
 }
 </style>
-
-<aside class="right-aside">
-  <div class="top">
-    <div class="top__container">
-      <div class="top__container-item"></div>
-      <div class="top__container-item"></div>
-      <div class="top__container-item"></div>
-    </div>
-  </div>
-  <nav class="nav">
-    <ul>
-      <li class="nav__item">Présentation</li>
-      <li class="nav__item">Compétences</li>
-      <li class="nav__item">Templates</li>
-      <li class="nav__item">Contact</li>
-    </ul>
-  </nav>
-</aside>
