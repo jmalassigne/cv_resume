@@ -13,7 +13,7 @@
       </div>
     </div>
     <div v-else class="main-page" ref="mainPage">
-      <aside class="left-aside">
+      <aside class="left-aside" @blur="openedNav = !openedNav">
         <header class="header">
           <div class="header__img">
             <img src="./assets/pp.jpg" alt="" />
