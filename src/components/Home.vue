@@ -102,7 +102,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    bottom: 100px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     height: 50px;
@@ -155,7 +155,7 @@ export default {
 
 .component-header {
   position: absolute;
-  right: 50px;
+  right: 100px;
   top: 60px;
 
   &__h2 {

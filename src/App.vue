@@ -13,8 +13,17 @@
       </div>
     </div>
     <div v-else class="main-page" ref="mainPage">
-      <aside class="left-aside" @blur="openedNav = !openedNav">
+      <aside class="left-aside" :class="{ openPrez: openedPrez }">
         <header class="header">
+          <button
+            class="buttonPrez"
+            :class="{ openPrez: openedPrez }"
+            @click.prevent="openedPrez = !openedPrez"
+          >
+            <div class="buttonPrez-item"></div>
+            <div class="buttonPrez-item"></div>
+            <div class="buttonPrez-item"></div>
+          </button>
           <div class="header__img">
             <img src="./assets/pp.jpg" alt="" />
           </div>
@@ -96,11 +105,14 @@
           <a href="#"><i class="fab fa-github-square"></i></a>
         </footer>
       </aside>
-      <main class="container" :class="{ open: openedNav }">
-        <Home v-if="activeComponent === 'home'" @openNav="openedNav = true"/>
+      <main class="container" :class="{ open: openedNav, openPrez: openedPrez }">
+        <Home v-if="activeComponent === 'home'" @openNav="openedNav = true" />
         <Prez v-if="activeComponent === 'prez'" />
         <Skills v-if="activeComponent === 'skills'" />
-        <Templates v-if="activeComponent === 'templates'" @openNav="openedNav = true"/>
+        <Templates
+          v-if="activeComponent === 'templates'"
+          @openNav="openedNav = true"
+        />
         <Contact v-if="activeComponent === 'contact'" />
       </main>
       <aside class="right-aside" :class="{ open: openedNav }">
@@ -114,8 +126,12 @@
         <nav class="nav">
           <ul>
             <li class="nav__item" @click.prevent="nav('prez')">Présentation</li>
-            <li class="nav__item" @click.prevent="nav('skills')">Compétences</li>
-            <li class="nav__item" @click.prevent="nav('templates')">Templates</li>
+            <li class="nav__item" @click.prevent="nav('skills')">
+              Compétences
+            </li>
+            <li class="nav__item" @click.prevent="nav('templates')">
+              Templates
+            </li>
             <li class="nav__item" @click.prevent="nav('contact')">Contact</li>
           </ul>
         </nav>
@@ -146,6 +162,7 @@ export default {
       startProgress: false,
       progress: 0,
       openedNav: false,
+      openedPrez: false,
       activeComponent: "home",
     };
   },
@@ -260,6 +277,10 @@ body {
   line-height: 25px;
   padding: 20px;
   font-family: "poppins", sans-serif;
+
+  @media (max-width: 884px) {
+    padding: 0;
+  }
 }
 
 h1,
@@ -332,10 +353,50 @@ aside {
 
 /********** Left Aside **********/
 
+.buttonPrez {
+  position: absolute;
+  right: -30px;
+  top: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 50px;
+  width: 30px;
+  border: none;
+  background-color: $background_1;
+  border-radius: 0 5px 5px 0;
+  padding: 5px 0;
+
+  &-item {
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: $yellow;
+  }
+
+  @media (max-width: 884px) {
+    display: flex;
+  }
+}
+
 .left-aside {
   height: 100%;
   overflow-y: auto;
   z-index: 3;
+  transition: left .3s;
+
+  @media (max-width: 884px) {
+    position: fixed;
+    left: -280px;
+  }
+
+  &.openPrez {
+    @media (max-width: 884px) {
+      position: fixed;
+      left: 0px;
+    }
+  }
 }
 
 .header {
@@ -370,6 +431,7 @@ aside {
     align-items: center;
     line-height: 1rem;
     background: $background_1;
+    text-transform: none;
     height: 50px;
     width: 120px;
     padding-left: 5px;
@@ -377,34 +439,35 @@ aside {
     border-radius: 4px;
     color: $white_heading;
     opacity: 0;
-    transition: opacity .3s;
+    transition: opacity 0.3s;
+
+    @media (max-width: 884px) {
+      display: none;
+    }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       left: -5px;
       top: 30%;
       width: 9px;
       height: 9px;
-      border: 1px solid red ;
+      border: 1px solid red;
       transform: rotate(45deg);
       background: $background_1;
       border: 1px solid $white_para;
       border-right: none;
       border-top: none;
       opacity: 0;
-      transition: opacity .3s;
+      transition: opacity 0.3s;
     }
   }
-
 
   &__img {
     position: relative;
     height: 90px;
     width: 90px;
     border-radius: 50%;
-
-
 
     &:after {
       position: absolute;
@@ -416,8 +479,6 @@ aside {
       background-color: $yellow;
       border-radius: 50%;
       animation: pulse 1.5s infinite;
-
-        
     }
 
     img {
@@ -628,6 +689,10 @@ aside {
   height: 50px;
   background-color: $background_2;
 
+  @media (max-width: 884px) {
+    bottom: 0;
+  }
+
   i {
     font-size: 1.3rem;
     margin: 0 15px;
@@ -659,9 +724,17 @@ aside {
   transition: all 0.3s;
   margin-right: 80px;
 
+  &.openPrez {
+    opacity: .2;
+  }
+
   &.open {
     transform: translateX(-120px);
     opacity: 0.3;
+
+    @media (min-width: 1542px) {
+      transform: translateX(0);
+    }
   }
 }
 
@@ -676,6 +749,19 @@ aside {
   width: 200px;
   width: 80px;
   transition: width 0.3s;
+  overflow: hidden;
+
+  @media (min-width: 1542px) {
+    position: relative;
+    top: 0;
+    right: 80px;
+  }
+
+  @media (max-width: 884px) {
+    top:0;
+    bottom: 0;
+    right: 0;
+  }
 
   .top {
     height: 80px;
@@ -719,7 +805,7 @@ aside {
       transition: transform 0.6s, opacity 0.6s, color 0.1s;
 
       &:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         left: -20px;
@@ -728,7 +814,7 @@ aside {
         border-radius: 2px;
         background: $yellow;
         opacity: 0;
-        transition: opacity .1s;
+        transition: opacity 0.1s;
       }
 
       &:nth-child(1) {
@@ -751,6 +837,12 @@ aside {
 
   &.open {
     width: 200px;
+
+    @media (min-width: 1542px) {
+      position: relative;
+      top: 0;
+      right: 80px;
+    }
 
     .top__container {
       &-item:nth-child(1) {

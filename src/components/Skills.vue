@@ -144,12 +144,25 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  
+  @media (max-width: 1100px) {
+    flex-direction: column;
+  }
 
   &__card {
     width: 250px;
     background: $background_4;
     border-radius: 5px;
     padding: 10px;
+
+    @media (max-width: 1300px) {
+    width: 200px;
+  }
+
+  @media (max-width: 1100px) {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 
     &-title {
       font-weight: 600;
