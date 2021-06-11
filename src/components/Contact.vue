@@ -47,21 +47,23 @@
           <div class="i">
             <i class="fas fa-user"></i>
           </div>
-           <input class="input" type="text" placeholder="Votre nom" autofocus>
+          <input class="input" type="text" placeholder="Votre nom" autofocus />
+        </div>
+        <div class="input-container">
+          <div class="i">@</div>
+          <input class="input" type="mail" placeholder="Votre adresse mail" />
         </div>
         <div class="input-container">
           <div class="i">
-            @
+            <i class="fas fa-envelope-open"></i>
           </div>
-          <input class="input" type="mail" placeholder="Votre adresse mail">
+          <textarea
+            class="textarea"
+            name=""
+            placeholder="Votre message"
+          ></textarea>
         </div>
-        <div class="input-container">
-        <div class="i">
-          <i class="fas fa-envelope-open"></i>
-        </div>
-        <textarea class="textarea" name="" placeholder="Votre message"></textarea>
-        </div> 
-        <button class="submit" type="submit">Envoyer</button>       
+        <button class="submit" type="submit">Envoyer</button>
       </form>
     </div>
   </div>
@@ -90,6 +92,12 @@ export default {
   background: $background_4;
   border-radius: 10px;
 
+  @media (max-width: 685px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   &__card {
     display: flex;
     flex-direction: column;
@@ -98,6 +106,22 @@ export default {
     margin: 0;
     color: $white_heading;
 
+    @media (max-width: 1116px) {
+      width: 45%;
+    }
+
+    @media (max-width: 1048px) {
+      width: 48%;
+    }
+
+    @media (max-width: 884px) {
+      width: 40%;
+    }
+
+    @media (max-width: 685px) {
+      width: 90%;
+    }
+
     &-title {
       font-size: 1.1rem;
       margin: 5px 0;
@@ -105,6 +129,29 @@ export default {
 
     p {
       margin: 5px 0;
+
+      @media (max-width: 1006px) {
+        font-size: 12px;
+      }
+
+      @media (max-width: 954px) {
+        font-size: 10px;
+      }
+
+      @media (max-width: 884px) {
+        font-size: 13px;
+      }
+
+      @media (max-width: 807px) {
+        font-size: 10px;
+      }
+      @media (max-width: 685px) {
+        font-size: 13px;
+      }
+
+      @media (max-width: 422px) {
+        font-size: 12px;
+      }
     }
 
     span {
@@ -118,7 +165,7 @@ export default {
     }
 
     a {
-      transition: color .3s;
+      transition: color 0.3s;
 
       &:hover {
         color: $yellow;
@@ -140,6 +187,17 @@ export default {
   margin-top: 60px;
   background: $background_4;
 
+  @media (max-width: 685px) {
+    margin-top: 30px;
+  }
+
+  @media (max-width: 679px) {
+    padding: 20px;
+  }
+  @media (max-width: 685px) {
+    padding: 10px;
+  }
+
   &__title {
     font-size: 1.1rem;
   }
@@ -156,11 +214,11 @@ export default {
         height: 40px;
       }
 
-       &:nth-child(2) {
-        height: 40px
+      &:nth-child(2) {
+        height: 40px;
       }
 
-       &:last-child {
+      &:last-child {
         height: 80px;
       }
 
@@ -173,7 +231,8 @@ export default {
       }
     }
 
-    .input, .textarea {
+    .input,
+    .textarea {
       display: inline-block;
       width: 95%;
       background: $background_2;
@@ -186,15 +245,21 @@ export default {
 
       &:focus {
         outline: none;
-        box-shadow: 2px 2px $yellow, -2px 2px $yellow, 2px -2px $yellow, -2px -2px $yellow
+        box-shadow: 2px 2px $yellow, -2px 2px $yellow, 2px -2px $yellow,
+          -2px -2px $yellow;
       }
     }
 
     .textarea {
       height: 100px;
-      font-family: 'poppins', sans-serif;
+      font-family: "poppins", sans-serif;
       vertical-align: middle;
+
+      @media (max-width: 535px) {
+        height: 80px;
+      }
     }
+
     .submit {
       cursor: pointer;
       color: black;
@@ -207,5 +272,4 @@ export default {
     }
   }
 }
-
 </style>
