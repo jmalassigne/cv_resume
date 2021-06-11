@@ -150,12 +150,20 @@ export default {
   }
 
   &__card {
-    width: 250px;
+    width: 300px;
     background: $background_4;
     border-radius: 5px;
     padding: 10px;
+    
+    @media (max-width: 1480px) {
+    width: 270px;
+  }
 
-    @media (max-width: 1300px) {
+  @media (max-width: 1350px) {
+    width: 240px;
+  }
+
+    @media (max-width: 1260px) {
     width: 200px;
   }
 
