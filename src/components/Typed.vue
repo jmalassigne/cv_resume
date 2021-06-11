@@ -1,6 +1,6 @@
 <template>
-    <vue-typed-js :strings="['\'I\'m available\'', '\'Ready to work\'']" :loop="true" :typeSpeed="100" :backSpeed="50">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;&nbsp;<p class='typing'></p>
+    <vue-typed-js class="typed-container" :strings="['\'I \'m available\'', '\'Ready to work\'']" :loop="true" :typeSpeed="100" :backSpeed="50">
+      <p class='typing'></p>
     </vue-typed-js>
 </template>
 
@@ -14,4 +14,13 @@ export default {
     name: 'Typed'
 };
 </script>
+
+<style  scoped>
+.typed-container {
+  position: relative;
+  left: 100px;
+  top: -18px;
+}
+</style>>
+
 

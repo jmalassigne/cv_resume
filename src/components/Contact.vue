@@ -47,7 +47,7 @@
           <div class="i">
             <i class="fas fa-user"></i>
           </div>
-           <input class="input" type="text" placeholder="Votre nom">
+           <input class="input" type="text" placeholder="Votre nom" autofocus>
         </div>
         <div class="input-container">
           <div class="i">

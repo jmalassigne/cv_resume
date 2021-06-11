@@ -18,6 +18,7 @@
           <div class="header__img">
             <img src="./assets/pp.jpg" alt="" />
           </div>
+          <div class="contact__msg">Je suis actuellement<br>disponible</div>
           <h1 class="header__name">julien malassigne</h1>
           <h2>développeur web</h2>
           <h3>full stack</h3>
@@ -99,7 +100,7 @@
         <Home v-if="activeComponent === 'home'" @openNav="openedNav = true"/>
         <Prez v-if="activeComponent === 'prez'" />
         <Skills v-if="activeComponent === 'skills'" />
-        <Templates v-if="activeComponent === 'templates'" />
+        <Templates v-if="activeComponent === 'templates'" @openNav="openedNav = true"/>
         <Contact v-if="activeComponent === 'contact'" />
       </main>
       <aside class="right-aside" :class="{ open: openedNav }">
@@ -350,11 +351,60 @@ aside {
   background-color: rgba($color: $background_2, $alpha: 0.9);
   text-transform: capitalize;
 
+  &:hover {
+    .contact__msg {
+      opacity: 1;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  .contact__msg {
+    position: absolute;
+    top: 70px;
+    right: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1rem;
+    background: $background_1;
+    height: 50px;
+    width: 120px;
+    padding-left: 5px;
+    border: 1px solid $white_para;
+    border-radius: 4px;
+    color: $white_heading;
+    opacity: 0;
+    transition: opacity .3s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 30%;
+      width: 9px;
+      height: 9px;
+      border: 1px solid red ;
+      transform: rotate(45deg);
+      background: $background_1;
+      border: 1px solid $white_para;
+      border-right: none;
+      border-top: none;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+  }
+
+
   &__img {
     position: relative;
     height: 90px;
     width: 90px;
     border-radius: 50%;
+
+
 
     &:after {
       position: absolute;
@@ -366,6 +416,8 @@ aside {
       background-color: $yellow;
       border-radius: 50%;
       animation: pulse 1.5s infinite;
+
+        
     }
 
     img {
@@ -434,7 +486,7 @@ aside {
         &.second:after {
           content: "";
           position: absolute;
-          background-color: $background_3;
+          background-color: #191923;
           clip-path: polygon(
             22% 69%,
             37% 43%,
@@ -455,7 +507,7 @@ aside {
         &.third:after {
           content: "";
           position: absolute;
-          background-color: $background_3;
+          background-color: #191923;
           clip-path: polygon(
             22% 69%,
             37% 43%,
@@ -476,7 +528,7 @@ aside {
         &.third:before {
           content: "";
           position: absolute;
-          background-color: $background_3;
+          background-color: #191923;
           clip-path: polygon(
             22% 69%,
             37% 43%,
